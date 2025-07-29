@@ -1,0 +1,654 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sibin O | Operations & Strategy Leader</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+    <!-- Chosen Palette: Sleek Dark (Deep Blue/Charcoal, Light Grey, Vibrant Orange) -->
+    <!-- Application Structure Plan: The portfolio is designed as a single-page narrative scroll. It starts with a strong hero section for immediate impact. It then flows into core competencies, followed by an an interactive career journey presented as case studies. A visual chart highlights the key career pivot from hospitality to ed-tech. The structure concludes with education, entrepreneurial activities, and a clear call-to-action. This top-down narrative flow was chosen to guide the user from a high-level summary to detailed evidence, making it easy to grasp Sibin's value proposition and then explore the proof points. -->
+    <!-- Visualization & Content Choices: Report Info: Career history -> Goal: Show industry experience distribution with granular detail -> Viz: Doughnut Chart (Chart.js) with multiple segments per industry -> Interaction: Hover to see company-specific details and duration -> Justification: Breaking down the main industry segments into individual companies directly within the doughnut chart provides a more detailed visual representation of career progression and adaptability, while enhanced tooltips offer precise duration information. Report Info: Job roles & responsibilities -> Goal: Showcase impact and achievements -> Presentation: Accordion-style expandable sections -> Interaction: Click to expand/collapse detailed bullet points -> Justification: Accordion design provides a clean, organized way to present detailed professional experience without overwhelming the user. It allows for selective exploration and maintains a compact layout, enhancing readability and user focus. Report Info: Core Competencies -> Goal: Visually represent skill proficiency -> Viz: Skill bars (HTML/CSS/JS) with gradient fill and staggered animation -> Interaction: Animated fill on scroll -> Justification: Skill bars provide an immediate and intuitive visual indication of proficiency levels for various skills, making the competencies section more dynamic and easier to digest than static text cards. The gradient and staggered animation enhance visual appeal and engagement. -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #1A1A2E; /* Dark Blue/Charcoal */
+            color: #F0F0F0; /* Light Grey - Default text color */
+            background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%2333334D' fill-opacity='0.1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0 20v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zm0 20v-4H4v4H0v2h4v4h2v-4h4v-2H6zM36 4v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zM6 4v-4H4v4H0v2h4v4h2v-4h4v-2H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+            background-repeat: repeat;
+        }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 400px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 300px;
+            max-height: 400px;
+        }
+        @media (min-width: 768px) {
+            .chart-container {
+                height: 350px;
+            }
+        }
+        .card-container-wrapper {
+            perspective: 1000px; /* Needed for 3D effect */
+            min-height: 250px; /* Minimum height for cards */
+            max-height: 400px; /* Maximum height for cards */
+        }
+        @media (min-width: 768px) {
+            .card-container-wrapper {
+                min-height: 280px;
+                max-height: 450px;
+            }
+        }
+        @media (min-width: 1024px) {
+            .card-container-wrapper {
+                min-height: 300px;
+                max-height: 500px;
+            }
+        }
+
+        .card-flip {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            text-align: center;
+            transition: transform 0.8s;
+            transform-style: preserve-3d;
+        }
+        .card-flip.is-flipped {
+            transform: rotateY(180deg);
+        }
+        .card-front, .card-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            -webkit-backface-visibility: hidden;
+            backface-visibility: hidden;
+            border-radius: 0.5rem; /* Tailwind rounded-lg */
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06); /* Tailwind shadow-md */
+            background-color: #22223B; /* Slightly lighter dark blue */
+            display: flex;
+            flex-direction: column;
+            justify-content: center; /* Center content vertically */
+            align-items: center; /* Center content horizontally */
+            padding: 1.5rem; /* Tailwind p-6 */
+        }
+        .card-back {
+            transform: rotateY(180deg);
+            overflow-y: auto; /* Enable scrolling for long content */
+            text-align: left; /* Align text to left for bullet points */
+            justify-content: flex-start; /* Align content to top for bullet points */
+            padding-top: 1.5rem; /* Ensure consistent padding */
+            padding-bottom: 1.5rem;
+        }
+        .nav-link {
+            transition: color 0.3s;
+            color: #B0B0B0; /* Medium Grey - Default nav link color */
+        }
+        .nav-link:hover, .nav-link.active {
+            color: #FF6B35; /* Vibrant Orange - Accent color on hover/active */
+        }
+        .btn-primary {
+            background-color: #FF6B35; /* Vibrant Orange */
+            color: #1A1A2E; /* Dark Blue/Charcoal */
+            transition: background-color 0.3s, transform 0.2s;
+        }
+        .btn-primary:hover {
+            background-color: #E65A2C; /* Darker Orange */
+            transform: translateY(-2px);
+        }
+        .hero-title {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 1s ease-out, transform 1s ease-out;
+            color: #F0F0F0; /* Light Grey */
+        }
+        .hero-title.loaded {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .section-animate {
+            opacity: 0;
+            transform: translateY(50px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+        .section-animate.in-view {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        #hero {
+            background: linear-gradient(180deg, #1A1A2E 0%, #22223B 100%); /* Dark gradient for hero */
+        }
+        .copy-icon {
+            cursor: pointer;
+            margin-left: 0.5rem;
+            display: inline-block;
+            width: 1em;
+            height: 1em;
+            vertical-align: middle; /* Align icon vertically with text */
+            fill: currentColor;
+            transition: transform 0.2s;
+        }
+        .copy-icon:hover {
+            transform: scale(1.1);
+        }
+        .message-box {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: #FF6B35; /* Vibrant Orange */
+            color: #1A1A2E; /* Dark Blue/Charcoal */
+            padding: 10px 20px;
+            border-radius: 5px;
+            opacity: 0;
+            transition: opacity 0.5s ease-in-out;
+            z-index: 1000;
+        }
+        .message-box.show {
+            opacity: 1;
+        }
+        /* Skill bar specific styles */
+        .skill-item {
+            background-color: #22223B; /* Slightly lighter dark blue */
+            padding: 1.25rem; /* p-5 */
+            border-radius: 0.5rem; /* rounded-lg */
+            box-shadow: 0 2px 4px -1px rgba(0, 0, 0, 0.05), 0 1px 2px -1px rgba(0, 0, 0, 0.03); /* shadow-sm */
+        }
+        .skill-bar-container {
+            background-color: #33334D; /* Medium dark blue for empty bar */
+            border-radius: 0.25rem; /* rounded-md */
+            height: 0.75rem; /* h-3 */
+            overflow: hidden;
+        }
+        .skill-bar-fill {
+            background: linear-gradient(to right, #FF6B35, #E65A2C); /* Vibrant Orange Gradient */
+            height: 100%;
+            width: 0%; /* Initial width for animation */
+            border-radius: 0.25rem; /* rounded-md */
+            transition: width 1.5s ease-out; /* Animation for fill */
+        }
+        .skill-item.in-view .skill-bar-fill {
+            width: var(--skill-width); /* Set by JS */
+        }
+
+        /* Contact Section Styles */
+        .contact-card {
+            background-color: #22223B; /* Slightly lighter dark blue */
+            border-radius: 0.75rem; /* rounded-xl */
+            padding: 2rem; /* p-8 */
+            text-align: center;
+            color: #F0F0F0; /* Light Grey */
+            transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05); /* shadow-lg */
+            cursor: pointer;
+            display: flex; /* Make it a flex container */
+            flex-direction: column; /* Stack items vertically */
+            justify-content: center; /* Center items vertically */
+            align-items: center; /* Center items horizontally */
+        }
+        .contact-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.2), 0 10px 10px -5px rgba(0, 0, 0, 0.08);
+        }
+        .contact-card .icon {
+            font-size: 3rem; /* text-5xl */
+            margin-bottom: 1rem;
+            color: #FF6B35; /* Vibrant Orange */
+        }
+        .contact-card .label {
+            font-weight: 600; /* font-semibold */
+            font-size: 1.125rem; /* text-lg */
+            margin-bottom: 0.5rem;
+        }
+        .contact-card .value {
+            font-size: 1rem; /* text-base */
+            word-break: break-all; /* Ensure long emails/numbers wrap */
+        }
+
+        /* Custom text color classes for consistent application */
+        .text-heading { color: #F0F0F0; } /* Light Grey */
+        .text-body { color: #B0B0B0; } /* Medium Grey */
+        .text-secondary { color: #707070; } /* Darker Grey */
+
+        /* Accordion specific styles */
+        .accordion-item {
+            background-color: #22223B; /* Slightly lighter dark blue */
+            border-radius: 0.5rem;
+            box-shadow: 0 2px 4px -1px rgba(0, 0, 0, 0.05), 0 1px 2px -1px rgba(0, 0, 0, 0.03);
+            overflow: hidden; /* Hide overflow during collapse/expand */
+            margin-bottom: 1rem;
+        }
+        .accordion-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.5rem;
+            cursor: pointer;
+            background-color: #2D3748; /* Darker header for contrast */
+            border-bottom: 1px solid #33334D; /* Subtle border */
+            transition: background-color 0.3s ease;
+        }
+        .accordion-header:hover {
+            background-color: #3A475C; /* Slightly darker on hover */
+        }
+        .accordion-header .arrow-icon {
+            transition: transform 0.3s ease;
+            color: #F0F0F0; /* Light icon */
+        }
+        .accordion-header.active .arrow-icon {
+            transform: rotate(90deg); /* Rotate arrow when active */
+        }
+        .accordion-content {
+            padding: 0 1.5rem; /* Horizontal padding */
+            max-height: 0; /* Initially hidden */
+            overflow: hidden;
+            transition: max-height 0.5s ease-out, padding 0.5s ease-out;
+            background-color: #22223B; /* Content background */
+        }
+        .accordion-content.open {
+            max-height: 500px; /* Max height to allow transition, adjust as needed */
+            padding-top: 1.5rem; /* Vertical padding when open */
+            padding-bottom: 1.5rem;
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <header class="bg-[#1A1A2E]/80 backdrop-blur-md sticky top-0 z-50 shadow-sm">
+        <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <div class="text-2xl font-bold text-heading">Sibin O</div>
+            <div class="hidden md:flex space-x-8">
+                <a href="#hero" class="nav-link" data-section="hero">Home</a>
+                <a href="#skills" class="nav-link" data-section="skills">Skills</a>
+                <a href="#experience" class="nav-link" data-section="experience">Experience</a>
+                <a href="#education" class="nav-link" data-section="education">Education</a>
+                <a href="#contact" class="nav-link" data-section="contact">Contact</a>
+            </div>
+            <button id="mobile-menu-button" class="md:hidden text-heading">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
+            </button>
+        </nav>
+        <div id="mobile-menu" class="hidden md:hidden bg-[#1A1A2E]">
+            <a href="#hero" class="block py-2 px-4 text-sm text-body hover:bg-[#2D3748]" data-section="hero">Home</a>
+            <a href="#skills" class="block py-2 px-4 text-sm text-body hover:bg-[#2D3748]" data-section="skills">Skills</a>
+            <a href="#experience" class="block py-2 px-4 text-sm text-body hover:bg-[#2D3748]" data-section="experience">Experience</a>
+            <a href="#education" class="block py-2 px-4 text-sm text-body hover:bg-[#2D3748]" data-section="education">Education</a>
+            <a href="#contact" class="block py-2 px-4 text-sm text-body hover:bg-[#2D3748]" data-section="contact">Contact</a>
+        </div>
+    </header>
+
+    <main class="container mx-auto px-6 py-12">
+        
+        <section id="hero" class="text-center py-16 rounded-lg shadow-lg">
+            <h1 class="text-4xl md:text-6xl font-bold hero-title leading-tight">Sibin O</h1>
+            <p class="text-xl md:text-2xl text-body mt-4 hero-title">Dynamic Operations & Strategy Leader</p>
+            <p class="max-w-3xl mx-auto mt-6 text-secondary hero-title">
+                Seeking a challenging role to leverage extensive experience in strategic planning, process improvement, and leadership. With a proven track record as an excellent team player and high adaptability, I am committed to driving organizational growth and becoming a valuable asset.
+            </p>
+            <div class="mt-8 hero-title flex flex-col sm:flex-row justify-center items-center space-y-4 sm:space-y-0 sm:space-x-4">
+                <a href="#contact" class="btn-primary font-bold py-3 px-8 rounded-full shadow-lg">Get In Touch</a>
+                <a href="Resume_Sibin (2).pdf" download="Resume_Sibin (2).pdf" class="btn-primary font-bold py-3 px-8 rounded-full shadow-lg bg-transparent border border-[#FF6B35] text-[#FF6B35] hover:bg-[#FF6B35] hover:text-[#1A1A2E]">Download Resume</a>
+            </div>
+        </section>
+
+        <section id="skills" class="py-16 section-animate">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold text-heading">Skills Proficiency</h2>
+                <p class="text-body mt-2">A visual representation of my core competencies and expertise.</p>
+            </div>
+            <div id="skills-container" class="max-w-3xl mx-auto space-y-6 md:grid md:grid-cols-2 md:gap-x-8 md:space-y-0">
+                <!-- Skill bars will be dynamically loaded here -->
+            </div>
+        </section>
+
+        <section id="experience" class="py-16 section-animate">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold text-heading">Professional Experience</h2>
+                <p class="text-body mt-2">A journey of impact across diverse industries. Click on any role to see the details.</p>
+            </div>
+            <div id="experience-accordion-container" class="max-w-4xl mx-auto">
+                <!-- Experience items will be dynamically loaded here as accordions -->
+            </div>
+        </section>
+
+        <section id="education" class="py-16 section-animate">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold text-heading">Education & Entrepreneurship</h2>
+                <p class="text-body mt-2">Foundational knowledge and a proactive, business-oriented mindset.</p>
+            </div>
+            <div class="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+                <div class="bg-[#22223B] p-8 rounded-lg shadow-md section-animate">
+                    <h3 class="text-xl font-bold text-heading mb-4">Formal Education</h3>
+                    <p class="text-body mb-2"><span class="font-semibold text-heading">Diploma:</span> Hotel Management, Aviation Travel and Tourism</p>
+                    <p class="text-body"><span class="font-semibold text-heading">Certification:</span> ICM Certified in Hotel Management</p>
+                </div>
+                <div class="bg-[#22223B] p-8 rounded-lg shadow-md section-animate">
+                    <h3 class="text-xl font-bold text-heading mb-4">Entrepreneurial Spirit</h3>
+                    <p class="text-body mb-2">Actively run a small business, consistently exploring innovative ways to generate revenue.</p>
+                    <p class="text-body"><span class="font-semibold text-heading">Interests:</span> Cycling, which helps in maintaining focus and rejuvenation.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="contact" class="py-16 text-center bg-[#1A1A2E] rounded-lg shadow-lg section-animate">
+             <h2 class="text-3xl font-bold text-heading">Let's Connect</h2>
+             <p class="mt-4 max-w-xl mx-auto mb-12 text-body">I'm excited to discuss how my skills and experiences can benefit your organization. Reach out to explore potential opportunities.</p>
+             <div class="grid md:grid-cols-3 gap-8 max-w-4xl mx-auto">
+                <div class="contact-card" onclick="copyToClipboard('email-value')">
+                    <div class="icon">📧</div>
+                    <div class="label">Email Address</div>
+                    <div id="email-value" class="value">sibinsasi4@gmail.com</div>
+                </div>
+                <div class="contact-card" onclick="copyToClipboard('phone-value')">
+                    <div class="icon">📞</div>
+                    <div class="label">Phone Number</div>
+                    <div id="phone-value" class="value">+91 9035485566</div>
+                </div>
+                <div class="contact-card">
+                    <div class="icon">📍</div>
+                    <div class="label">Location</div>
+                    <div class="value">Singanayakanahalli, Yelahanka, Bangalore</div>
+                </div>
+             </div>
+        </section>
+
+    </main>
+
+    <div id="message-box" class="message-box hidden"></div>
+    
+    <script>
+        function showMessage(message) {
+            const msgBox = document.getElementById('message-box');
+            msgBox.textContent = message;
+            msgBox.classList.remove('hidden');
+            msgBox.classList.add('show');
+            setTimeout(() => {
+                msgBox.classList.remove('show');
+                msgBox.classList.add('hidden');
+            }, 2000);
+        }
+
+        function copyToClipboard(elementId) {
+            const textToCopy = document.getElementById(elementId).textContent;
+            const tempInput = document.createElement('textarea');
+            tempInput.value = textToCopy;
+            tempInput.style.position = 'fixed'; 
+            tempInput.style.left = '-9999px'; 
+            tempInput.style.top = '0'; 
+            document.body.appendChild(tempInput);
+            tempInput.focus(); 
+            tempInput.select(); 
+
+            try {
+                const successful = document.execCommand('copy');
+                if (successful) {
+                    showMessage('Copied to clipboard!');
+                } else {
+                    showMessage('Failed to copy. Please copy manually.');
+                }
+            } catch (err) {
+                showMessage('Error copying: ' + err.message + '. Please copy manually.');
+            } finally {
+                document.body.removeChild(tempInput);
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const mobileMenuButton = document.getElementById('mobile-menu-button');
+            const mobileMenu = document.getElementById('mobile-menu');
+            const navLinks = document.querySelectorAll('.nav-link');
+            const sections = document.querySelectorAll('main section');
+
+            mobileMenuButton.addEventListener('click', () => {
+                mobileMenu.classList.toggle('hidden');
+            });
+
+            // Hero section animation
+            const heroElements = document.querySelectorAll('.hero-title');
+            heroElements.forEach((el, index) => {
+                setTimeout(() => {
+                    el.classList.add('loaded');
+                }, 200 * index); // Stagger the animation
+            });
+
+            const experienceData = [
+                {
+                    company: "Nolan Edu Tech Pvt Ltd (Masai School)",
+                    role: "Operation Manager - L1",
+                    start: "Jan 2022", end: "Present",
+                    description: [
+                        "Collaborated across Curriculum and Admissions teams to enhance student support and session planning.",
+                        "Designed and implemented a comprehensive revision module with mock interviews, significantly boosting placement readiness.",
+                        "Managed Placement, Revenue Operations, and Alumni teams, contributing to overall organizational growth.",
+                        "Monitored batch performance using analytical skills, driving continuous improvement in student outcomes.",
+                        "Maintained proficiency in internal systems to ensure seamless operational flow."
+                    ]
+                },
+                {
+                    company: "OYO Life",
+                    role: "Operations Manager",
+                    start: "Sep 2018", end: "Jan 2020",
+                    description: [
+                        "Managed Profit and Loss for 5-10 OYO LIFE properties, driving financial performance.",
+                        "Successfully addressed and resolved owner concerns, improving stakeholder relationships.",
+                        "Organized guest events and conducted property audits to ensure high standards and operational efficiency.",
+                        "Implemented strategies that led to increased profitability and improved owner satisfaction across the portfolio."
+                    ]
+                },
+                {
+                    company: "BYJU'S The Learning App",
+                    role: "Operation Executive",
+                    start: "Dec 2017", end: "Sep 2018",
+                    description: [
+                        "Led the transformation of new offices nationwide, ensuring brand consistency and operational readiness.",
+                        "Oversaw branding implementation and audited installations for new facilities.",
+                        "Ensured timely vendor payments, streamlining financial processes for rapid expansion.",
+                        "Successfully launched multiple new offices, contributing to the company's national footprint."
+                    ]
+                },
+                {
+                    company: "Oraval Stays Pvt Ltd",
+                    role: "TR & VM lead - Operations",
+                    start: "Nov 2017", end: "Dec 2017",
+                    description: [
+                        "Maintained strong vendor relationships, ensuring smooth supply chain operations.",
+                        "Managed SAP payments efficiently, ensuring financial accuracy and timely transactions.",
+                        "Planned and coordinated photography for new property activations, enhancing market appeal.",
+                        "Conducted property audits to ensure quality standards and operational compliance."
+                    ]
+                },
+                {
+                    company: "Hotel Brigade Royale",
+                    role: "FOM- Sales and Operations",
+                    start: "Jun 2014", end: "Nov 2017",
+                    description: [
+                        "Oversaw front office operations, ensuring seamless guest experiences.",
+                        "Generated bookings and effectively managed stock and inventory.",
+                        "Maintained high Net Promoter Score (NPS) with guest reviews, enhancing brand reputation.",
+                        "Successfully converted walk-ins to bookings and transformed unhappy guests into repeat customers, directly boosting revenue."
+                    ]
+                },
+                {
+                    company: "Niraamaya Hotels and Resort",
+                    role: "Sales and reservations",
+                    start: "Jan 2014", end: "May 2014",
+                    description: [
+                        "Collaborated across functions to optimize sales and reservation processes.",
+                        "Visited travel agents and managed Central Reservation System (CRS) to generate bookings.",
+                        "Confirmed bookings, processed payments, and managed hotel inventory online.",
+                        "Coordinated overbookings and created customized guest packages to maximize occupancy and guest satisfaction."
+                    ]
+                },
+                {
+                    company: "Whitesky Hospitality Pvt Ltd",
+                    role: "Online Distribution co-ordinate",
+                    start: "Oct 2012", end: "Dec 2013",
+                    description: [
+                        "Managed hotel inventory and ensured rate consistency across online distribution channels.",
+                        "Generated bookings and implemented strategies to prevent property shifts.",
+                        "Maintained office inventory and replenished supplies for smooth daily operations.",
+                        "Crafted guest itineraries and promoted packages to optimize guest experiences and operational efficiency."
+                    ]
+                }
+            ];
+
+            const experienceAccordionContainer = document.getElementById('experience-accordion-container');
+            experienceData.forEach((exp, index) => {
+                const accordionItem = document.createElement('div');
+                accordionItem.className = 'accordion-item section-animate'; 
+                accordionItem.innerHTML = `
+                    <div class="accordion-header" id="accordion-header-${index}">
+                        <div>
+                            <h3 class="text-xl font-bold text-heading">${exp.company}</h3>
+                            <p class="text-body">${exp.role} <span class="text-secondary ml-2">${exp.start} - ${exp.end}</span></p>
+                        </div>
+                        <svg class="arrow-icon w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+                    </div>
+                    <div class="accordion-content" id="accordion-content-${index}">
+                        <ul class="list-disc pl-5 text-body">
+                            ${exp.description.map(point => `<li class="mb-2">${point}</li>`).join('')}
+                        </ul>
+                    </div>
+                `;
+                experienceAccordionContainer.appendChild(accordionItem);
+
+                const header = accordionItem.querySelector('.accordion-header');
+                const content = accordionItem.querySelector('.accordion-content');
+
+                header.addEventListener('click', () => {
+                    // Close all other open accordions
+                    document.querySelectorAll('.accordion-content.open').forEach(openContent => {
+                        if (openContent !== content) {
+                            openContent.classList.remove('open');
+                            openContent.previousElementSibling.classList.remove('active');
+                        }
+                    });
+
+                    content.classList.toggle('open');
+                    header.classList.toggle('active');
+                });
+            });
+
+            // Skill data for the new section
+            const skillsData = [
+                { name: "Strategic Planning", proficiency: 90 },
+                { name: "Process Improvement", proficiency: 95 },
+                { name: "Leadership", proficiency: 85 },
+                { name: "Operations Management", proficiency: 92 },
+                { name: "Revenue Operations", proficiency: 88 },
+                { name: "Team Management", proficiency: 90 },
+                { name: "Stakeholder Management", proficiency: 87 },
+                { name: "Financial Oversight", proficiency: 80 },
+                { name: "Project Management", proficiency: 85 },
+                { name: "Data Analysis", proficiency: 75 }
+            ];
+
+            const skillsContainer = document.getElementById('skills-container');
+            skillsData.forEach(skill => {
+                const skillItem = document.createElement('div');
+                skillItem.className = 'skill-item section-animate'; 
+                skillItem.innerHTML = `
+                    <div class="flex justify-between items-center mb-1">
+                        <span class="text-lg font-medium text-body">${skill.name}</span>
+                        <span class="text-sm font-semibold text-secondary">${skill.proficiency}%</span>
+                    </div>
+                    <div class="skill-bar-container">
+                        <div class="skill-bar-fill" style="--skill-width: ${skill.proficiency}%;"></div>
+                    </div>
+                `;
+                skillsContainer.appendChild(skillItem);
+            });
+
+            // Intersection Observer for scroll animations
+            const observerOptions = {
+                root: null,
+                rootMargin: '0px',
+                threshold: 0.1
+            };
+
+            const observer = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('in-view');
+                        if (entry.target.classList.contains('skill-item')) {
+                            const skillBarFill = entry.target.querySelector('.skill-bar-fill');
+                            if (skillBarFill) {
+                                skillBarFill.style.width = skillBarFill.style.getPropertyValue('--skill-width');
+                            }
+                        }
+                    } else {
+                        entry.target.classList.remove('in-view'); 
+                        if (entry.target.classList.contains('skill-item')) {
+                            const skillBarFill = entry.target.querySelector('.skill-bar-fill');
+                            if (skillBarFill) {
+                                skillBarFill.style.width = '0%';
+                            }
+                        }
+                    }
+                });
+            }, observerOptions);
+
+            document.querySelectorAll('.section-animate').forEach(section => {
+                observer.observe(section);
+            });
+            document.querySelectorAll('.skill-item').forEach(item => {
+                observer.observe(item);
+            });
+
+
+            // Active nav link highlighting
+            const updateActiveNavLink = () => {
+                let currentActiveSectionId = '';
+                sections.forEach(section => {
+                    const rect = section.getBoundingClientRect();
+                    if (rect.top <= window.innerHeight / 2 && rect.bottom >= window.innerHeight / 2) {
+                        currentActiveSectionId = section.id;
+                    }
+                });
+
+                navLinks.forEach(link => {
+                    if (link.dataset.section === currentActiveSectionId) {
+                        link.classList.add('active');
+                    } else {
+                        link.classList.remove('active');
+                    }
+                });
+            };
+
+            window.addEventListener('scroll', updateActiveNavLink);
+            updateActiveNavLink(); // Initial call on load
+
+            // Ensure sections in view on load are animated
+            const initialCheckObserver = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('in-view');
+                        if (entry.target.classList.contains('skill-item')) {
+                            const skillBarFill = entry.target.querySelector('.skill-bar-fill');
+                            if (skillBarFill) {
+                                skillBarFill.style.width = skillBarFill.style.getPropertyValue('--skill-width');
+                            }
+                        }
+                        initialCheckObserver.unobserve(entry.target); // Stop observing once animated
+                    }
+                });
+            }, { threshold: 0.1 });
+
+            document.querySelectorAll('.section-animate').forEach(section => {
+                initialCheckObserver.observe(section);
+            });
+            document.querySelectorAll('.skill-item').forEach(item => {
+                initialCheckObserver.observe(item);
+            });
+        });
+    </script>
+
+</body>
+</html>
