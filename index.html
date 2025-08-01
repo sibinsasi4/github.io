@@ -11,7 +11,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
     <!-- Chosen Palette: Sleek Dark (Deep Blue/Charcoal, Light Grey, Vibrant Orange) -->
     <!-- Application Structure Plan: The portfolio is designed as a single-page narrative scroll. It starts with a strong hero section for immediate impact. It then flows into core competencies, followed by an an interactive career journey presented as case studies. A visual chart highlights the key career pivot from hospitality to ed-tech. The structure concludes with education, entrepreneurial activities, and a clear call-to-action. This top-down narrative flow was chosen to guide the user from a high-level summary to detailed evidence, making it easy to grasp Sibin's value proposition and then explore the proof points. -->
-    <!-- Visualization & Content Choices: Report Info: Career history -> Goal: Show industry experience distribution with granular detail -> Viz: Doughnut Chart (Chart.js) with multiple segments per industry -> Interaction: Hover to see company-specific details and duration -> Justification: Breaking down the main industry segments into individual companies directly within the doughnut chart provides a more detailed visual representation of career progression and adaptability, while enhanced tooltips offer precise duration information. Report Info: Job roles & responsibilities -> Goal: Showcase impact and achievements -> Presentation: Accordion-style expandable sections -> Interaction: Click to expand/collapse detailed bullet points -> Justification: Accordion design provides a clean, organized way to present detailed professional experience without overwhelming the user. It allows for selective exploration and maintains a compact layout, enhancing readability and user focus. Report Info: Core Competencies -> Goal: Visually represent skill proficiency -> Viz: Skill bars (HTML/CSS/JS) with gradient fill and staggered animation -> Interaction: Animated fill on scroll -> Justification: Skill bars provide an immediate and intuitive visual indication of proficiency levels for various skills, making the competencies section more dynamic and easier to digest than static text cards. The gradient and staggered animation enhance visual appeal and engagement. -->
+    <!-- Visualization & Content Choices: Report Info: Career history -> Goal: Show a clear career progression -> Viz: Horizontal timeline/roadmap with interactive pop-ups -> Interaction: Click on each roadmap item to open a modal with detailed bullet points -> Justification: This format visually narrates the professional journey, making it highly intuitive. The pop-up modals keep the main page clean and uncluttered while still providing access to all the detailed information, creating a dynamic and professional user experience. Report Info: Job roles & responsibilities -> Goal: Showcase impact and achievements -> Presentation: Accordion-style expandable sections -> Interaction: Click to expand/collapse detailed bullet points -> Justification: Accordion design provides a clean, organized way to present detailed professional experience without overwhelming the user. It allows for selective exploration and maintains a compact layout, enhancing readability and user focus. Report Info: Core Competencies -> Goal: Visually represent skill proficiency -> Viz: Skill bars (HTML/CSS/JS) with gradient fill and staggered animation -> Interaction: Animated fill on scroll -> Justification: Skill bars provide an immediate and intuitive visual indication of proficiency levels for various skills, making the competencies section more dynamic and easier to digest than static text cards. The gradient and staggered animation enhance visual appeal and engagement. -->
     <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
     <style>
         body {
@@ -217,45 +217,151 @@
         .text-body { color: #B0B0B0; } /* Medium Grey */
         .text-secondary { color: #707070; } /* Darker Grey */
 
-        /* Accordion specific styles */
-        .accordion-item {
-            background-color: #22223B; /* Slightly lighter dark blue */
+        /* New Education Card Styles */
+        .education-card-container {
+            perspective: 1000px;
+        }
+        .education-card {
+            background-color: #22223B;
             border-radius: 0.5rem;
-            box-shadow: 0 2px 4px -1px rgba(0, 0, 0, 0.05), 0 1px 2px -1px rgba(0, 0, 0, 0.03);
-            overflow: hidden; /* Hide overflow during collapse/expand */
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            padding: 2rem;
+            height: 100%;
+            transition: transform 0.8s;
+            transform-style: preserve-3d;
+            position: relative;
+            cursor: pointer;
+        }
+        .education-card.is-flipped {
+            transform: rotateY(180deg);
+        }
+        .education-card-front, .education-card-back {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            -webkit-backface-visibility: hidden;
+            backface-visibility: hidden;
+            padding: 2rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            border-radius: 0.5rem;
+        }
+        .education-card-back {
+            transform: rotateY(180deg);
+            justify-content: flex-start;
+            text-align: left;
+        }
+        .education-card-icon {
+            font-size: 3rem;
+            color: #FF6B35;
             margin-bottom: 1rem;
         }
-        .accordion-header {
+
+        /* New Experience Roadmap Styles */
+        .roadmap-container {
             display: flex;
-            justify-content: space-between;
+            flex-direction: column;
             align-items: center;
-            padding: 1.5rem;
-            cursor: pointer;
-            background-color: #2D3748; /* Darker header for contrast */
-            border-bottom: 1px solid #33334D; /* Subtle border */
-            transition: background-color 0.3s ease;
         }
-        .accordion-header:hover {
-            background-color: #3A475C; /* Slightly darker on hover */
+        .roadmap-line {
+            width: 2px;
+            height: 50px;
+            background-color: #33334D;
+            margin-bottom: 1rem;
         }
-        .accordion-header .arrow-icon {
+        .roadmap-item {
+            position: relative;
+            padding-top: 1rem;
+            padding-bottom: 1rem;
+        }
+        .roadmap-point {
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 12px;
+            height: 12px;
+            background: #FF6B35;
+            border-radius: 50%;
             transition: transform 0.3s ease;
-            color: #F0F0F0; /* Light icon */
         }
-        .accordion-header.active .arrow-icon {
-            transform: rotate(90deg); /* Rotate arrow when active */
+        .roadmap-card {
+            background-color: #22223B;
+            border-radius: 0.5rem;
+            padding: 1.5rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            cursor: pointer;
+            width: 300px;
+            text-align: center;
         }
-        .accordion-content {
-            padding: 0 1.5rem; /* Horizontal padding */
-            max-height: 0; /* Initially hidden */
-            overflow: hidden;
-            transition: max-height 0.5s ease-out, padding 0.5s ease-out;
-            background-color: #22223B; /* Content background */
+        .roadmap-card:hover .roadmap-point {
+            transform: translateX(-50%) scale(1.5);
         }
-        .accordion-content.open {
-            max-height: 500px; /* Max height to allow transition, adjust as needed */
-            padding-top: 1.5rem; /* Vertical padding when open */
-            padding-bottom: 1.5rem;
+        .roadmap-period {
+            font-size: 0.875rem;
+            color: #707070;
+            margin-bottom: 0.5rem;
+        }
+        .roadmap-role {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: #F0F0F0;
+            margin-bottom: 0.25rem;
+        }
+        .roadmap-company {
+            font-size: 1rem;
+            color: #B0B0B0;
+        }
+        /* Modal styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0,0,0,0.4);
+            backdrop-filter: blur(5px);
+            animation: fadeIn 0.3s;
+        }
+        .modal-content {
+            background-color: #22223B;
+            margin: 10% auto;
+            padding: 2rem;
+            border: 1px solid #33334D;
+            width: 80%;
+            max-width: 600px;
+            border-radius: 0.5rem;
+            position: relative;
+            animation: slideInTop 0.5s;
+        }
+        .close-button {
+            color: #aaa;
+            position: absolute;
+            top: 1rem;
+            right: 1.5rem;
+            font-size: 2rem;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        .close-button:hover, .close-button:focus {
+            color: #FF6B35;
+            text-decoration: none;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        @keyframes slideInTop {
+            from { transform: translateY(-50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
         }
     </style>
 </head>
@@ -270,6 +376,7 @@
                 <a href="#experience" class="nav-link" data-section="experience">Experience</a>
                 <a href="#education" class="nav-link" data-section="education">Education</a>
                 <a href="#contact" class="nav-link" data-section="contact">Contact</a>
+                <a href="https://www.linkedin.com/in/sibin-sasidharan-1339605b/" class="nav-link" target="_blank" rel="noopener noreferrer">LinkedIn</a>
             </div>
             <button id="mobile-menu-button" class="md:hidden text-heading">
                 <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
@@ -281,6 +388,7 @@
             <a href="#experience" class="block py-2 px-4 text-sm text-body hover:bg-[#2D3748]" data-section="experience">Experience</a>
             <a href="#education" class="block py-2 px-4 text-sm text-body hover:bg-[#2D3748]" data-section="education">Education</a>
             <a href="#contact" class="block py-2 px-4 text-sm text-body hover:bg-[#2D3748]" data-section="contact">Contact</a>
+            <a href="https://www.linkedin.com/in/sibin-sasidharan-1339605b/" class="block py-2 px-4 text-sm text-body hover:bg-[#2D3748]" target="_blank" rel="noopener noreferrer">LinkedIn</a>
         </div>
     </header>
 
@@ -311,10 +419,10 @@
         <section id="experience" class="py-16 section-animate">
             <div class="text-center mb-12">
                 <h2 class="text-3xl font-bold text-heading">Professional Experience</h2>
-                <p class="text-body mt-2">A journey of impact across diverse industries. Click on any role to see the details.</p>
+                <p class="text-body mt-2">A journey of impact across diverse industries. Click a company to see the details.</p>
             </div>
-            <div id="experience-accordion-container" class="max-w-4xl mx-auto">
-                <!-- Experience items will be dynamically loaded here as accordions -->
+            <div id="roadmap-container" class="max-w-5xl mx-auto flex flex-col items-center">
+                <!-- Roadmap items will be dynamically loaded here -->
             </div>
         </section>
 
@@ -324,65 +432,102 @@
                 <p class="text-body mt-2">Foundational knowledge and a proactive, business-oriented mindset.</p>
             </div>
             <div class="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
-                <div class="accordion-item section-animate">
-                    <div class="accordion-header" id="education-header">
-                        <div>
+                <div id="education-card-container" class="education-card-container section-animate">
+                    <div class="education-card">
+                        <div class="education-card-front">
+                            <div class="education-card-icon">🎓</div>
                             <h3 class="text-xl font-bold text-heading">Formal Education</h3>
-                            <p class="text-body">Key certifications and academic background.</p>
+                            <p class="text-body mt-2">Click to see key certifications and academic background.</p>
                         </div>
-                        <svg class="arrow-icon w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
-                    </div>
-                    <div class="accordion-content" id="education-content">
-                        <ul class="list-disc pl-5 text-body">
-                            <li class="mb-2"><span class="font-semibold text-heading">Diploma:</span> Hotel Management, Aviation Travel and Tourism</li>
-                            <li class="mb-2"><span class="font-semibold text-heading">Certification:</span> ICM Certified in Hotel Management</li>
-                            <li class="mb-2">Successfully completed the Hotel Management certification program offered by ICM.</li>
-                        </ul>
+                        <div class="education-card-back">
+                            <h3 class="text-xl font-bold text-heading mb-4">Formal Education</h3>
+                            <ul class="list-disc pl-5 text-body">
+                                <li class="mb-2"><span class="font-semibold text-heading">Diploma:</span> Hotel Management, Aviation Travel and Tourism</li>
+                                <li class="mb-2"><span class="font-semibold text-heading">Certification:</span> ICM Certified in Hotel Management</li>
+                                <li class="mb-2">Successfully completed the Hotel Management certification program offered by ICM.</li>
+                            </ul>
+                        </div>
                     </div>
                 </div>
-                <div class="accordion-item section-animate">
-                    <div class="accordion-header" id="entrepreneurship-header">
-                        <div>
+                <div id="entrepreneurship-card-container" class="education-card-container section-animate">
+                    <div class="education-card">
+                        <div class="education-card-front">
+                            <div class="education-card-icon">🚀</div>
                             <h3 class="text-xl font-bold text-heading">Entrepreneurial Spirit</h3>
-                            <p class="text-body">Proactive ventures and personal development.</p>
+                            <p class="text-body mt-2">Click to see proactive ventures and personal development.</p>
                         </div>
-                        <svg class="arrow-icon w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
-                    </div>
-                    <div class="accordion-content" id="entrepreneurship-content">
-                        <ul class="list-disc pl-5 text-body">
-                            <li class="mb-2">Actively running a small business or startup.</li>
-                            <li class="mb-2">Continuously exploring different ways to generate revenue.</li>
-                            <li class="mb-2"><span class="font-semibold text-heading">Interests:</span> Cycling - helps me feel refreshed and rejuvenated.</li>
-                        </ul>
+                        <div class="education-card-back">
+                            <h3 class="text-xl font-bold text-heading mb-4">Entrepreneurial Spirit</h3>
+                            <ul class="list-disc pl-5 text-body">
+                                <li class="mb-2">Actively running a small business or startup.</li>
+                                <li class="mb-2">Continuously exploring different ways to generate revenue.</li>
+                                <li class="mb-2"><span class="font-semibold text-heading">Interests:</span> Cycling - helps me feel refreshed and rejuvenated.</li>
+                            </ul>
+                        </div>
                     </div>
                 </div>
             </div>
         </section>
 
-        <section id="contact" class="py-16 text-center bg-[#1A1A2E] rounded-lg shadow-lg section-animate">
-             <h2 class="text-3xl font-bold text-heading">Let's Connect</h2>
-             <p class="mt-4 max-w-xl mx-auto mb-12 text-body">I'm excited to discuss how my skills and experiences can benefit your organization. Reach out to explore potential opportunities.</p>
-             <div class="grid md:grid-cols-3 gap-8 max-w-4xl mx-auto">
-                <div class="contact-card" onclick="copyToClipboard('email-value')">
-                    <div class="icon">📧</div>
-                    <div class="label">Email Address</div>
-                    <div id="email-value" class="value">sibinsasi4@gmail.com</div>
-                </div>
-                <div class="contact-card" onclick="copyToClipboard('phone-value')">
-                    <div class="icon">📞</div>
-                    <div class="label">Phone Number</div>
-                    <div id="phone-value" class="value">+91 9035485566</div>
-                </div>
-                <div class="contact-card">
-                    <div class="icon">📍</div>
-                    <div class="label">Location</div>
-                    <div class="value">Singanayakanahalli, Yelahanka, Bangalore</div>
-                </div>
+        <section id="contact" class="py-16 section-animate">
+             <div class="bg-[#1A1A2E] rounded-lg shadow-lg text-center p-12">
+                 <h2 class="text-3xl font-bold text-heading">Let's Connect</h2>
+                 <p class="mt-4 max-w-xl mx-auto mb-12 text-body">I'm excited to discuss how my skills and experiences can benefit your organization. Reach out to explore potential opportunities.</p>
+                 <div class="grid md:grid-cols-3 gap-8 max-w-4xl mx-auto">
+                    <div class="contact-card" onclick="copyToClipboard('email-value')">
+                        <div class="icon">📧</div>
+                        <div class="label">Email Address</div>
+                        <div id="email-value" class="value">sibinsasi4@gmail.com</div>
+                    </div>
+                    <div class="contact-card" onclick="copyToClipboard('phone-value')">
+                        <div class="icon">📞</div>
+                        <div class="label">Phone Number</div>
+                        <div id="phone-value" class="value">+91 9035485566</div>
+                    </div>
+                    <div class="contact-card">
+                        <div class="icon">📍</div>
+                        <div class="label">Location</div>
+                        <div class="value">Singanayakanahalli, Yelahanka, Bangalore</div>
+                    </div>
+                 </div>
              </div>
+        </section>
+
+        <section id="visitor-counter-section" class="py-16 section-animate">
+            <div class="bg-[#22223B] p-8 rounded-lg shadow-lg max-w-xl mx-auto text-heading hover:shadow-2xl transition-shadow duration-300">
+                <h3 class="text-2xl font-bold mb-4 text-[#FF6B35]">Profile Visitors</h3>
+                <div class="flex flex-wrap justify-center items-center gap-6">
+                    <div class="flex flex-col items-center">
+                        <span class="text-3xl">☀️</span>
+                        <span class="text-4xl font-bold text-heading mt-2">1</span>
+                        <span class="text-sm font-semibold text-secondary">Daily</span>
+                    </div>
+                    <div class="flex flex-col items-center">
+                        <span class="text-3xl">🗓️</span>
+                        <span class="text-4xl font-bold text-heading mt-2">50</span>
+                        <span class="text-sm font-semibold text-secondary">Monthly</span>
+                    </div>
+                    <div class="flex flex-col items-center">
+                        <span class="text-3xl">🌎</span>
+                        <span class="text-4xl font-bold text-heading mt-2">150</span>
+                        <span class="text-sm font-semibold text-secondary">Total</span>
+                    </div>
+                </div>
+            </div>
         </section>
 
     </main>
 
+    <div id="experience-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-button">&times;</span>
+            <h3 id="modal-company" class="text-2xl font-bold text-heading mb-1"></h3>
+            <p id="modal-role" class="text-lg text-body mb-2"></p>
+            <p id="modal-period" class="text-sm text-secondary mb-4"></p>
+            <ul id="modal-description" class="list-disc pl-5 text-body"></ul>
+        </div>
+    </div>
+    
     <div id="message-box" class="message-box hidden"></div>
     
     <script>
@@ -436,22 +581,24 @@
             // Smooth scroll for nav links with offset
             navLinks.forEach(link => {
                 link.addEventListener('click', function(e) {
-                    e.preventDefault();
                     const targetId = this.getAttribute('href');
-                    const targetElement = document.querySelector(targetId);
-                    if (targetElement) {
-                        const headerOffset = header.offsetHeight; // Get dynamic header height
-                        const elementPosition = targetElement.getBoundingClientRect().top + window.pageYOffset;
-                        const offsetPosition = elementPosition - headerOffset;
+                    if (targetId.startsWith('#')) {
+                        e.preventDefault();
+                        const targetElement = document.querySelector(targetId);
+                        if (targetElement) {
+                            const headerOffset = header.offsetHeight; // Get dynamic header height
+                            const elementPosition = targetElement.getBoundingClientRect().top + window.pageYOffset;
+                            const offsetPosition = elementPosition - headerOffset;
 
-                        window.scrollTo({
-                            top: offsetPosition,
-                            behavior: "smooth"
-                        });
+                            window.scrollTo({
+                                top: offsetPosition,
+                                behavior: "smooth"
+                            });
 
-                        // Close mobile menu after clicking a link
-                        if (!mobileMenu.classList.contains('hidden')) {
-                            mobileMenu.classList.add('hidden');
+                            // Close mobile menu after clicking a link
+                            if (!mobileMenu.classList.contains('hidden')) {
+                                mobileMenu.classList.add('hidden');
+                            }
                         }
                     }
                 });
@@ -546,43 +693,49 @@
                     ]
                 }
             ];
-
-            const experienceAccordionContainer = document.getElementById('experience-accordion-container');
+            
+            const roadmapContainer = document.getElementById('roadmap-container');
+            const modal = document.getElementById('experience-modal');
+            const closeModalBtn = document.querySelector('.close-button');
+            const modalCompany = document.getElementById('modal-company');
+            const modalRole = document.getElementById('modal-role');
+            const modalPeriod = document.getElementById('modal-period');
+            const modalDescription = document.getElementById('modal-description');
+            
             experienceData.forEach((exp, index) => {
-                const accordionItem = document.createElement('div');
-                accordionItem.className = 'accordion-item section-animate'; 
-                accordionItem.innerHTML = `
-                    <div class="accordion-header" id="accordion-header-${index}">
-                        <div>
-                            <h3 class="text-xl font-bold text-heading">${exp.company}</h3>
-                            <p class="text-body">${exp.role} <span class="text-secondary ml-2">${exp.start} - ${exp.end}</span></p>
-                        </div>
-                        <svg class="arrow-icon w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
-                    </div>
-                    <div class="accordion-content" id="accordion-content-${index}">
-                        <ul class="list-disc pl-5 text-body">
-                            ${exp.description.map(point => `<li class="mb-2">${point}</li>`).join('')}
-                        </ul>
+                const roadmapItem = document.createElement('div');
+                roadmapItem.className = 'roadmap-item';
+                roadmapItem.innerHTML = `
+                    <div class="roadmap-line"></div>
+                    <div class="roadmap-point"></div>
+                    <div class="roadmap-card">
+                        <div class="roadmap-period">${exp.start} - ${exp.end}</div>
+                        <div class="roadmap-role">${exp.role}</div>
+                        <div class="roadmap-company">${exp.company}</div>
                     </div>
                 `;
-                experienceAccordionContainer.appendChild(accordionItem);
-
-                const header = accordionItem.querySelector('.accordion-header');
-                const content = accordionItem.querySelector('.accordion-content');
-
-                header.addEventListener('click', () => {
-                    // Close all other open accordions
-                    document.querySelectorAll('#experience-accordion-container .accordion-content.open').forEach(openContent => {
-                        if (openContent !== content) {
-                            openContent.classList.remove('open');
-                            openContent.previousElementSibling.classList.remove('active');
-                        }
-                    });
-
-                    content.classList.toggle('open');
-                    header.classList.toggle('active');
+                roadmapContainer.appendChild(roadmapItem);
+                
+                const card = roadmapItem.querySelector('.roadmap-card');
+                
+                card.addEventListener('click', () => {
+                    modalCompany.textContent = exp.company;
+                    modalRole.textContent = exp.role;
+                    modalPeriod.textContent = `${exp.start} - ${exp.end}`;
+                    modalDescription.innerHTML = exp.description.map(point => `<li class="mb-2">${point}</li>`).join('');
+                    modal.style.display = 'block';
                 });
             });
+
+            closeModalBtn.addEventListener('click', () => {
+                modal.style.display = 'none';
+            });
+            window.addEventListener('click', (event) => {
+                if (event.target === modal) {
+                    modal.style.display = 'none';
+                }
+            });
+
 
             // Skill data for the new section
             const skillsData = [
@@ -647,7 +800,7 @@
                 observer.observe(section);
             });
             document.querySelectorAll('.skill-item').forEach(item => {
-                observer.observe(item);
+                        observer.observe(item);
             });
 
 
@@ -656,9 +809,8 @@
                 let currentActiveSectionId = '';
                 sections.forEach(section => {
                     const rect = section.getBoundingClientRect();
-                    // Check if the section is mostly in view, accounting for header
                     const headerHeight = header.offsetHeight;
-                    if (rect.top <= headerHeight + 10 && rect.bottom >= headerHeight + 10) { // Add a small buffer
+                    if (rect.top <= headerHeight + 10 && rect.bottom >= headerHeight + 10) { 
                         currentActiveSectionId = section.id;
                     }
                 });
@@ -673,52 +825,18 @@
             };
 
             window.addEventListener('scroll', updateActiveNavLink);
-            updateActiveNavLink(); // Initial call on load
-
-            // Ensure sections in view on load are animated
-            const initialCheckObserver = new IntersectionObserver((entries, observer) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.classList.add('in-view');
-                        if (entry.target.classList.contains('skill-item')) {
-                            const skillBarFill = entry.target.querySelector('.skill-bar-fill');
-                            if (skillBarFill) {
-                                skillBarFill.style.width = skillBarFill.style.getPropertyValue('--skill-width');
-                            }
-                        }
-                        initialCheckObserver.unobserve(entry.target); // Stop observing once animated
-                    }
-                });
-            }, { threshold: 0.1 });
-
-            document.querySelectorAll('.section-animate').forEach(section => {
-                initialCheckObserver.observe(section);
-            });
-            document.querySelectorAll('.skill-item').forEach(item => {
-                initialCheckObserver.observe(item);
-            });
+            updateActiveNavLink(); 
 
             // Education & Entrepreneurship Accordion Logic
-            const educationHeader = document.getElementById('education-header');
-            const educationContent = document.getElementById('education-content');
-            const entrepreneurshipHeader = document.getElementById('entrepreneurship-header');
-            const entrepreneurshipContent = document.getElementById('entrepreneurship-content');
+            const educationCard = document.querySelector('#education-card-container .education-card');
+            const entrepreneurshipCard = document.querySelector('#entrepreneurship-card-container .education-card');
 
-            function toggleAccordion(header, content) {
-                // Close other open accordions in this section
-                document.querySelectorAll('#education .accordion-content.open').forEach(openContent => {
-                    if (openContent !== content) {
-                        openContent.classList.remove('open');
-                        openContent.previousElementSibling.classList.remove('active');
-                    }
-                });
-
-                content.classList.toggle('open');
-                header.classList.toggle('active');
-            }
-
-            educationHeader.addEventListener('click', () => toggleAccordion(educationHeader, educationContent));
-            entrepreneurshipHeader.addEventListener('click', () => toggleAccordion(entrepreneurshipHeader, entrepreneurshipContent));
+            educationCard.addEventListener('click', () => {
+                educationCard.classList.toggle('is-flipped');
+            });
+            entrepreneurshipCard.addEventListener('click', () => {
+                entrepreneurshipCard.classList.toggle('is-flipped');
+            });
         });
     </script>
 
