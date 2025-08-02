@@ -5,114 +5,100 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sibin O | Operations & Strategy Leader</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
-    <!-- Chosen Palette: Sleek Dark (Deep Blue/Charcoal, Light Grey, Vibrant Orange) -->
-    <!-- Application Structure Plan: The portfolio is designed as a single-page narrative scroll. It starts with a strong hero section for immediate impact. It then flows into core competencies, followed by an an interactive career journey presented as case studies. A visual chart highlights the key career pivot from hospitality to ed-tech. The structure concludes with education, entrepreneurial activities, and a clear call-to-action. This top-down narrative flow was chosen to guide the user from a high-level summary to detailed evidence, making it easy to grasp Sibin's value proposition and then explore the proof points. -->
-    <!-- Visualization & Content Choices: Report Info: Career history -> Goal: Show a clear career progression -> Viz: Horizontal timeline/roadmap with interactive pop-ups -> Interaction: Click on each roadmap item to open a modal with detailed bullet points -> Justification: This format visually narrates the professional journey, making it highly intuitive. The pop-up modals keep the main page clean and uncluttered while still providing access to all the detailed information, creating a dynamic and professional user experience. Report Info: Job roles & responsibilities -> Goal: Showcase impact and achievements -> Presentation: Accordion-style expandable sections -> Interaction: Click to expand/collapse detailed bullet points -> Justification: Accordion design provides a clean, organized way to present detailed professional experience without overwhelming the user. It allows for selective exploration and maintains a compact layout, enhancing readability and user focus. Report Info: Core Competencies -> Goal: Visually represent skill proficiency -> Viz: Skill bars (HTML/CSS/JS) with gradient fill and staggered animation -> Interaction: Animated fill on scroll -> Justification: Skill bars provide an immediate and intuitive visual indication of proficiency levels for various skills, making the competencies section more dynamic and easier to digest than static text cards. The gradient and staggered animation enhance visual appeal and engagement. -->
+    <!-- Chosen Palette: Elegant Dynamic (White/Charcoal with Rich Gold) -->
+    <!-- Application Structure Plan: The portfolio is a single-page, scrollable narrative. The layout is completely rebuilt to be "book clear and impressive" using a minimalist and elegant aesthetic. The hero section is clean and impactful. Skills and experience are presented in clean, interactive card grids. Education uses an engaging flip card design. The contact section is simple and functional. The overall design emphasizes a light, professional theme with a vibrant blue/teal accent for visual interest and interactivity. -->
+    <!-- Visualization & Content Choices: The new design uses a high-contrast, elegant color scheme with a gold accent. Skills and experience are presented as interactive cards in a responsive grid. Hover effects provide a subtle interactive element, making the content feel dynamic without being distracting. The education section uses a flip card to add a unique, engaging touch. This structure is designed to be highly readable and easy to navigate on any device. -->
     <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
     <style>
         body {
             font-family: 'Inter', sans-serif;
-            background-color: #1A1A2E; /* Dark Blue/Charcoal */
-            color: #F0F0F0; /* Light Grey - Default text color */
-            background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%2333334D' fill-opacity='0.1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0 20v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zm0 20v-4H4v4H0v2h4v4h2v-4h4v-2H6zM36 4v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zM6 4v-4H4v4H0v2h4v4h2v-4h4v-2H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
-            background-repeat: repeat;
-        }
-        .chart-container {
-            position: relative;
-            width: 100%;
-            max-width: 400px;
-            margin-left: auto;
-            margin-right: auto;
-            height: 300px;
-            max-height: 400px;
-        }
-        @media (min-width: 768px) {
-            .chart-container {
-                height: 350px;
-            }
-        }
-        .card-container-wrapper {
-            perspective: 1000px; /* Needed for 3D effect */
-            min-height: 250px; /* Minimum height for cards */
-            max-height: 400px; /* Maximum height for cards */
-        }
-        @media (min-width: 768px) {
-            .card-container-wrapper {
-                min-height: 280px;
-                max-height: 450px;
-            }
-        }
-        @media (min-width: 1024px) {
-            .card-container-wrapper {
-                min-height: 300px;
-                max-height: 500px;
-            }
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            transition: background-color 0.3s, color 0.3s;
         }
 
-        .card-flip {
-            position: relative;
-            width: 100%;
-            height: 100%;
-            text-align: center;
-            transition: transform 0.8s;
-            transform-style: preserve-3d;
+        :root {
+            --bg-color-light: #F4F6F8;
+            --text-color-light: #34495E;
+            --text-heading-light: #2C3E50;
+            --text-body-light: #5D6D7E;
+            --text-secondary-light: #95A5A6;
+            --accent-color-light: #C89B31;
+            --bg-primary-light: #FFFFFF;
+            --bg-secondary-light: #ECF0F1;
+            
+            --bg-color-dark: #2C3E50;
+            --text-color-dark: #ECF0F1;
+            --text-heading-dark: #FFFFFF;
+            --text-body-dark: #BDC3C7;
+            --text-secondary-dark: #95A5A6;
+            --accent-color-dark: #FFD700;
+            --bg-primary-dark: #34495E;
+            --bg-secondary-dark: #2C3E50;
         }
-        .card-flip.is-flipped {
-            transform: rotateY(180deg);
+
+        body.light-theme {
+            --bg-color: var(--bg-color-light);
+            --text-color: var(--text-color-light);
+            --text-heading: var(--text-heading-light);
+            --text-body: var(--text-body-light);
+            --text-secondary: var(--text-secondary-light);
+            --accent-color: var(--accent-color-light);
+            --bg-primary: var(--bg-primary-light);
+            --bg-secondary: var(--bg-secondary-light);
         }
-        .card-front, .card-back {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            -webkit-backface-visibility: hidden;
-            backface-visibility: hidden;
-            border-radius: 0.5rem; /* Tailwind rounded-lg */
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06); /* Tailwind shadow-md */
-            background-color: #22223B; /* Slightly lighter dark blue */
-            display: flex;
-            flex-direction: column;
-            justify-content: center; /* Center content vertically */
-            align-items: center; /* Center content horizontally */
-            padding: 1.5rem; /* Tailwind p-6 */
+
+        body.dark-theme {
+            --bg-color: var(--bg-color-dark);
+            --text-color: var(--text-color-dark);
+            --text-heading: var(--text-heading-dark);
+            --text-body: var(--text-body-dark);
+            --text-secondary: var(--text-secondary-dark);
+            --accent-color: var(--accent-color-dark);
+            --bg-primary: var(--bg-primary-dark);
+            --bg-secondary: var(--bg-secondary-dark);
         }
-        .card-back {
-            transform: rotateY(180deg);
-            overflow-y: auto; /* Enable scrolling for long content */
-            text-align: left; /* Align text to left for bullet points */
-            justify-content: flex-start; /* Align content to top for bullet points */
-            padding-top: 1.5rem; /* Ensure consistent padding */
-            padding-bottom: 1.5rem;
-        }
-        .nav-link {
-            transition: color 0.3s;
-            color: #B0B0B0; /* Medium Grey - Default nav link color */
-        }
-        .nav-link:hover, .nav-link.active {
-            color: #FF6B35; /* Vibrant Orange - Accent color on hover/active */
-        }
+
+        .bg-page { background-color: var(--bg-color); }
+        .bg-card { background-color: var(--bg-primary); }
+        .bg-dark-card { background-color: var(--bg-secondary); }
+        .text-heading { color: var(--text-heading); }
+        .text-body { color: var(--text-body); }
+        .text-secondary { color: var(--text-secondary); }
+        .accent-color { color: var(--accent-color); }
+
         .btn-primary {
-            background-color: #FF6B35; /* Vibrant Orange */
-            color: #1A1A2E; /* Dark Blue/Charcoal */
+            background-color: var(--accent-color);
+            color: var(--bg-primary);
             transition: background-color 0.3s, transform 0.2s;
         }
         .btn-primary:hover {
-            background-color: #E65A2C; /* Darker Orange */
+            background-color: #A37F28; /* Darker accent */
             transform: translateY(-2px);
         }
-        .hero-title {
-            opacity: 0;
-            transform: translateY(20px);
-            transition: opacity 1s ease-out, transform 1s ease-out;
-            color: #F0F0F0; /* Light Grey */
+        .btn-secondary {
+            background-color: transparent;
+            border: 2px solid var(--accent-color);
+            color: var(--accent-color);
+            transition: background-color 0.3s, color 0.3s, transform 0.2s;
         }
-        .hero-title.loaded {
-            opacity: 1;
-            transform: translateY(0);
+        .btn-secondary:hover {
+            background-color: var(--accent-color);
+            color: var(--bg-primary);
+            transform: translateY(-2px);
         }
+
+        .nav-link {
+            transition: color 0.3s;
+            color: var(--text-body);
+        }
+        .nav-link:hover, .nav-link.active {
+            color: var(--accent-color);
+        }
+        
         .section-animate {
             opacity: 0;
             transform: translateY(50px);
@@ -122,120 +108,79 @@
             opacity: 1;
             transform: translateY(0);
         }
-        #hero {
-            background: linear-gradient(180deg, #1A1A2E 0%, #22223B 100%); /* Dark gradient for hero */
-        }
-        .copy-icon {
-            cursor: pointer;
-            margin-left: 0.5rem;
-            display: inline-block;
-            width: 1em;
-            height: 1em;
-            vertical-align: middle; /* Align icon vertically with text */
-            fill: currentColor;
-            transition: transform 0.2s;
-        }
-        .copy-icon:hover {
-            transform: scale(1.1);
-        }
-        .message-box {
-            position: fixed;
-            bottom: 20px;
-            left: 50%;
-            transform: translateX(-50%);
-            background-color: #FF6B35; /* Vibrant Orange */
-            color: #1A1A2E; /* Dark Blue/Charcoal */
-            padding: 10px 20px;
-            border-radius: 5px;
+        .hero-title {
             opacity: 0;
-            transition: opacity 0.5s ease-in-out;
-            z-index: 1000;
+            transform: translateY(20px);
+            transition: opacity 1s ease-out, transform 1s ease-out;
         }
-        .message-box.show {
+        .hero-title.loaded {
             opacity: 1;
-        }
-        /* Skill bar specific styles */
-        .skill-item {
-            background-color: #22223B; /* Slightly lighter dark blue */
-            padding: 1.25rem; /* p-5 */
-            border-radius: 0.5rem; /* rounded-lg */
-            box-shadow: 0 2px 4px -1px rgba(0, 0, 0, 0.05), 0 1px 2px -1px rgba(0, 0, 0, 0.03); /* shadow-sm */
-        }
-        .skill-bar-container {
-            background-color: #33334D; /* Medium dark blue for empty bar */
-            border-radius: 0.25rem; /* rounded-md */
-            height: 0.75rem; /* h-3 */
-            overflow: hidden;
-        }
-        .skill-bar-fill {
-            background: linear-gradient(to right, #FF6B35, #E65A2C); /* Vibrant Orange Gradient */
-            height: 100%;
-            width: 0%; /* Initial width for animation */
-            border-radius: 0.25rem; /* rounded-md */
-            transition: width 1.5s ease-out; /* Animation for fill */
-        }
-        .skill-item.in-view .skill-bar-fill {
-            width: var(--skill-width); /* Set by JS */
+            transform: translateY(0);
         }
 
-        /* Contact Section Styles */
-        .contact-card {
-            background-color: #22223B; /* Slightly lighter dark blue */
-            border-radius: 0.75rem; /* rounded-xl */
-            padding: 2rem; /* p-8 */
-            text-align: center;
-            color: #F0F0F0; /* Light Grey */
-            transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
-            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05); /* shadow-lg */
-            cursor: pointer;
-            display: flex; /* Make it a flex container */
-            flex-direction: column; /* Stack items vertically */
-            justify-content: center; /* Center items vertically */
-            align-items: center; /* Center items horizontally */
-        }
-        .contact-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.2), 0 10px 10px -5px rgba(0, 0, 0, 0.08);
-        }
-        .contact-card .icon {
-            font-size: 3rem; /* text-5xl */
-            margin-bottom: 1rem;
-            color: #FF6B35; /* Vibrant Orange */
-        }
-        .contact-card .label {
-            font-weight: 600; /* font-semibold */
-            font-size: 1.125rem; /* text-lg */
-            margin-bottom: 0.5rem;
-        }
-        .contact-card .value {
-            font-size: 1rem; /* text-base */
-            word-break: break-all; /* Ensure long emails/numbers wrap */
-        }
-
-        /* Custom text color classes for consistent application */
-        .text-heading { color: #F0F0F0; } /* Light Grey */
-        .text-body { color: #B0B0B0; } /* Medium Grey */
-        .text-secondary { color: #707070; } /* Darker Grey */
-
-        /* New Education Card Styles */
-        .education-card-container {
-            perspective: 1000px;
-        }
-        .education-card {
-            background-color: #22223B;
+        /* Card Styles */
+        .card {
+            background-color: var(--bg-primary);
             border-radius: 0.5rem;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            padding: 1.5rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
+            position: relative;
+            border: 1px solid var(--bg-secondary);
+        }
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Skill and Experience Grids */
+        .skill-grid, .experience-grid {
+            display: grid;
+            gap: 1.5rem;
+            grid-template-columns: repeat(1, minmax(0, 1fr));
+        }
+        @media (min-width: 640px) {
+            .skill-grid {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+        }
+        @media (min-width: 768px) {
+            .experience-grid {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+        }
+        @media (min-width: 1024px) {
+            .experience-grid {
+                grid-template-columns: repeat(3, minmax(0, 1fr));
+            }
+        }
+
+        /* Flip Card Styles */
+        .flip-card-container {
+            perspective: 1000px;
+            min-height: 250px;
+        }
+        @media (min-width: 768px) {
+            .flip-card-container {
+                min-height: 280px;
+            }
+        }
+        .flip-card {
+            background-color: var(--bg-primary);
+            border-radius: 0.5rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
             padding: 2rem;
             height: 100%;
             transition: transform 0.8s;
             transform-style: preserve-3d;
             position: relative;
             cursor: pointer;
+            border: 1px solid var(--bg-secondary);
         }
-        .education-card.is-flipped {
+        .flip-card.is-flipped {
             transform: rotateY(180deg);
         }
-        .education-card-front, .education-card-back {
+        .flip-card-front, .flip-card-back {
             position: absolute;
             top: 0;
             left: 0;
@@ -251,72 +196,17 @@
             text-align: center;
             border-radius: 0.5rem;
         }
-        .education-card-back {
+        .flip-card-back {
             transform: rotateY(180deg);
             justify-content: flex-start;
             text-align: left;
         }
-        .education-card-icon {
+        .flip-card-icon {
             font-size: 3rem;
-            color: #FF6B35;
+            color: var(--accent-color);
             margin-bottom: 1rem;
         }
 
-        /* New Experience Roadmap Styles */
-        .roadmap-container {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-        .roadmap-line {
-            width: 2px;
-            height: 50px;
-            background-color: #33334D;
-            margin-bottom: 1rem;
-        }
-        .roadmap-item {
-            position: relative;
-            padding-top: 1rem;
-            padding-bottom: 1rem;
-        }
-        .roadmap-point {
-            position: absolute;
-            top: 0;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 12px;
-            height: 12px;
-            background: #FF6B35;
-            border-radius: 50%;
-            transition: transform 0.3s ease;
-        }
-        .roadmap-card {
-            background-color: #22223B;
-            border-radius: 0.5rem;
-            padding: 1.5rem;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-            cursor: pointer;
-            width: 300px;
-            text-align: center;
-        }
-        .roadmap-card:hover .roadmap-point {
-            transform: translateX(-50%) scale(1.5);
-        }
-        .roadmap-period {
-            font-size: 0.875rem;
-            color: #707070;
-            margin-bottom: 0.5rem;
-        }
-        .roadmap-role {
-            font-size: 1.25rem;
-            font-weight: 600;
-            color: #F0F0F0;
-            margin-bottom: 0.25rem;
-        }
-        .roadmap-company {
-            font-size: 1rem;
-            color: #B0B0B0;
-        }
         /* Modal styles */
         .modal {
             display: none;
@@ -332,18 +222,19 @@
             animation: fadeIn 0.3s;
         }
         .modal-content {
-            background-color: #22223B;
+            background-color: var(--bg-primary);
             margin: 10% auto;
             padding: 2rem;
-            border: 1px solid #33334D;
+            border: 1px solid var(--bg-secondary);
             width: 80%;
             max-width: 600px;
             border-radius: 0.5rem;
             position: relative;
             animation: slideInTop 0.5s;
+            color: var(--text-color);
         }
         .close-button {
-            color: #aaa;
+            color: var(--text-secondary);
             position: absolute;
             top: 1rem;
             right: 1.5rem;
@@ -351,9 +242,8 @@
             font-weight: bold;
             cursor: pointer;
         }
-        .close-button:hover, .close-button:focus {
-            color: #FF6B35;
-            text-decoration: none;
+        .close-button:hover {
+            color: var(--accent-color);
         }
         @keyframes fadeIn {
             from { opacity: 0; }
@@ -365,9 +255,9 @@
         }
     </style>
 </head>
-<body class="antialiased">
+<body class="light-theme">
 
-    <header class="bg-[#1A1A2E]/80 backdrop-blur-md sticky top-0 z-50 shadow-sm" id="main-header">
+    <header class="bg-white/80 backdrop-blur-md sticky top-0 z-50 shadow-sm" id="main-header">
         <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
             <a href="#hero" class="text-2xl font-bold text-heading">Sibin O</a>
             <div class="hidden md:flex space-x-8">
@@ -378,68 +268,73 @@
                 <a href="#contact" class="nav-link" data-section="contact">Contact</a>
                 <a href="https://www.linkedin.com/in/sibin-sasidharan-1339605b/" class="nav-link" target="_blank" rel="noopener noreferrer">LinkedIn</a>
             </div>
-            <button id="mobile-menu-button" class="md:hidden text-heading">
-                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
-            </button>
+            <div class="flex items-center space-x-4">
+                <button id="theme-toggle" class="p-2 rounded-full hover:bg-secondary">
+                    <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path></svg>
+                </button>
+                <button id="mobile-menu-button" class="md:hidden p-2 rounded-full hover:bg-secondary">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
+                </button>
+            </div>
         </nav>
-        <div id="mobile-menu" class="hidden md:hidden bg-[#1A1A2E]">
-            <a href="#hero" class="block py-2 px-4 text-sm text-body hover:bg-[#2D3748]" data-section="hero">Home</a>
-            <a href="#skills" class="block py-2 px-4 text-sm text-body hover:bg-[#2D3748]" data-section="skills">Skills</a>
-            <a href="#experience" class="block py-2 px-4 text-sm text-body hover:bg-[#2D3748]" data-section="experience">Experience</a>
-            <a href="#education" class="block py-2 px-4 text-sm text-body hover:bg-[#2D3748]" data-section="education">Education</a>
-            <a href="#contact" class="block py-2 px-4 text-sm text-body hover:bg-[#2D3748]" data-section="contact">Contact</a>
-            <a href="https://www.linkedin.com/in/sibin-sasidharan-1339605b/" class="block py-2 px-4 text-sm text-body hover:bg-[#2D3748]" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+        <div id="mobile-menu" class="hidden md:hidden bg-card">
+            <a href="#hero" class="block py-2 px-4 text-sm text-body hover:bg-secondary" data-section="hero">Home</a>
+            <a href="#skills" class="block py-2 px-4 text-sm text-body hover:bg-secondary" data-section="skills">Skills</a>
+            <a href="#experience" class="block py-2 px-4 text-sm text-body hover:bg-secondary" data-section="experience">Experience</a>
+            <a href="#education" class="block py-2 px-4 text-sm text-body hover:bg-secondary" data-section="education">Education</a>
+            <a href="#contact" class="block py-2 px-4 text-sm text-body hover:bg-secondary" data-section="contact">Contact</a>
+            <a href="https://www.linkedin.com/in/sibin-sasidharan-1339605b/" class="block py-2 px-4 text-sm text-body hover:bg-secondary" target="_blank" rel="noopener noreferrer">LinkedIn</a>
         </div>
     </header>
 
-    <main class="container mx-auto px-6 py-12">
+    <main class="container mx-auto px-6 py-12 space-y-16">
         
-        <section id="hero" class="text-center py-16 rounded-lg shadow-lg">
-            <h1 class="text-4xl md:text-6xl font-bold hero-title leading-tight">Sibin O</h1>
+        <section id="hero" class="text-center py-16 rounded-lg shadow-lg bg-card">
+            <h1 class="text-4xl md:text-6xl font-bold text-heading leading-tight hero-title">Sibin O</h1>
             <p class="text-xl md:text-2xl text-body mt-4 hero-title">Dynamic Operations & Strategy Leader</p>
             <p class="max-w-3xl mx-auto mt-6 text-secondary hero-title">
                 Seeking a challenging role to leverage extensive experience in strategic planning, process improvement, and leadership. With a proven track record as an excellent team player and high adaptability, I am committed to driving organizational growth and becoming a valuable asset.
             </p>
             <div class="mt-8 hero-title flex flex-col sm:flex-row justify-center items-center space-y-4 sm:space-y-0 sm:space-x-4">
                 <a href="#contact" class="btn-primary font-bold py-3 px-8 rounded-full shadow-lg">Get In Touch</a>
-                <a href="Resume_Sibin (2).pdf" download="Resume_Sibin (2).pdf" class="btn-primary font-bold py-3 px-8 rounded-full shadow-lg bg-transparent border border-[#FF6B35] text-[#FF6B35] hover:bg-[#FF6B35] hover:text-[#1A1A2E]">Download Resume</a>
+                <a href="Resume_Sibin (2).pdf" download="Resume_Sibin (2).pdf" class="btn-secondary font-bold py-3 px-8 rounded-full shadow-lg">Download Resume</a>
             </div>
         </section>
 
-        <section id="skills" class="py-16 section-animate">
+        <section id="skills" class="section-animate">
             <div class="text-center mb-12">
                 <h2 class="text-3xl font-bold text-heading">Skills Proficiency</h2>
                 <p class="text-body mt-2">A visual representation of my core competencies and expertise.</p>
             </div>
-            <div id="skills-container" class="max-w-3xl mx-auto space-y-6 md:grid md:grid-cols-2 md:gap-x-8 md:space-y-0">
-                <!-- Skill bars will be dynamically loaded here -->
+            <div id="skills-container" class="max-w-4xl mx-auto skill-grid">
+                <!-- Skill items will be dynamically loaded here -->
             </div>
         </section>
 
-        <section id="experience" class="py-16 section-animate">
+        <section id="experience" class="section-animate">
             <div class="text-center mb-12">
                 <h2 class="text-3xl font-bold text-heading">Professional Experience</h2>
                 <p class="text-body mt-2">A journey of impact across diverse industries. Click a company to see the details.</p>
             </div>
-            <div id="roadmap-container" class="max-w-5xl mx-auto flex flex-col items-center">
-                <!-- Roadmap items will be dynamically loaded here -->
+            <div id="experience-grid-container" class="max-w-5xl mx-auto experience-grid">
+                <!-- Experience items will be dynamically loaded here -->
             </div>
         </section>
 
-        <section id="education" class="py-16 section-animate">
+        <section id="education" class="section-animate">
             <div class="text-center mb-12">
                 <h2 class="text-3xl font-bold text-heading">Education & Entrepreneurship</h2>
                 <p class="text-body mt-2">Foundational knowledge and a proactive, business-oriented mindset.</p>
             </div>
             <div class="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
-                <div id="education-card-container" class="education-card-container section-animate">
-                    <div class="education-card">
-                        <div class="education-card-front">
-                            <div class="education-card-icon">🎓</div>
+                <div id="education-card-container" class="flip-card-container section-animate">
+                    <div class="flip-card bg-card">
+                        <div class="flip-card-front">
+                            <div class="flip-card-icon">🎓</div>
                             <h3 class="text-xl font-bold text-heading">Formal Education</h3>
                             <p class="text-body mt-2">Click to see key certifications and academic background.</p>
                         </div>
-                        <div class="education-card-back">
+                        <div class="flip-card-back">
                             <h3 class="text-xl font-bold text-heading mb-4">Formal Education</h3>
                             <ul class="list-disc pl-5 text-body">
                                 <li class="mb-2"><span class="font-semibold text-heading">Diploma:</span> Hotel Management, Aviation Travel and Tourism</li>
@@ -449,14 +344,14 @@
                         </div>
                     </div>
                 </div>
-                <div id="entrepreneurship-card-container" class="education-card-container section-animate">
-                    <div class="education-card">
-                        <div class="education-card-front">
-                            <div class="education-card-icon">🚀</div>
+                <div id="entrepreneurship-card-container" class="flip-card-container section-animate">
+                    <div class="flip-card bg-card">
+                        <div class="flip-card-front">
+                            <div class="flip-card-icon">🚀</div>
                             <h3 class="text-xl font-bold text-heading">Entrepreneurial Spirit</h3>
                             <p class="text-body mt-2">Click to see proactive ventures and personal development.</p>
                         </div>
-                        <div class="education-card-back">
+                        <div class="flip-card-back">
                             <h3 class="text-xl font-bold text-heading mb-4">Entrepreneurial Spirit</h3>
                             <ul class="list-disc pl-5 text-body">
                                 <li class="mb-2">Actively running a small business or startup.</li>
@@ -469,51 +364,28 @@
             </div>
         </section>
 
-        <section id="contact" class="py-16 section-animate">
-             <div class="bg-[#1A1A2E] rounded-lg shadow-lg text-center p-12">
+        <section id="contact" class="section-animate">
+             <div class="bg-card rounded-lg shadow-lg text-center p-12">
                  <h2 class="text-3xl font-bold text-heading">Let's Connect</h2>
                  <p class="mt-4 max-w-xl mx-auto mb-12 text-body">I'm excited to discuss how my skills and experiences can benefit your organization. Reach out to explore potential opportunities.</p>
                  <div class="grid md:grid-cols-3 gap-8 max-w-4xl mx-auto">
-                    <div class="contact-card" onclick="copyToClipboard('email-value')">
+                    <div class="contact-card bg-dark-card" onclick="copyToClipboard('email-value')">
                         <div class="icon">📧</div>
                         <div class="label">Email Address</div>
                         <div id="email-value" class="value">sibinsasi4@gmail.com</div>
                     </div>
-                    <div class="contact-card" onclick="copyToClipboard('phone-value')">
+                    <div class="contact-card bg-dark-card" onclick="copyToClipboard('phone-value')">
                         <div class="icon">📞</div>
                         <div class="label">Phone Number</div>
                         <div id="phone-value" class="value">+91 9035485566</div>
                     </div>
-                    <div class="contact-card">
+                    <div class="contact-card bg-dark-card">
                         <div class="icon">📍</div>
                         <div class="label">Location</div>
-                        <div class="value">Singanayakanahalli, Yelahanka, Bangalore</div>
+                        <div class="value">Singanayakanahalli, Yelhanka, Bangalore</div>
                     </div>
                  </div>
              </div>
-        </section>
-
-        <section id="visitor-counter-section" class="py-16 section-animate">
-            <div class="bg-[#22223B] p-8 rounded-lg shadow-lg max-w-xl mx-auto text-heading hover:shadow-2xl transition-shadow duration-300">
-                <h3 class="text-2xl font-bold mb-4 text-[#FF6B35]">Profile Visitors</h3>
-                <div class="flex flex-wrap justify-center items-center gap-6">
-                    <div class="flex flex-col items-center">
-                        <span class="text-3xl">☀️</span>
-                        <span class="text-4xl font-bold text-heading mt-2">1</span>
-                        <span class="text-sm font-semibold text-secondary">Daily</span>
-                    </div>
-                    <div class="flex flex-col items-center">
-                        <span class="text-3xl">🗓️</span>
-                        <span class="text-4xl font-bold text-heading mt-2">50</span>
-                        <span class="text-sm font-semibold text-secondary">Monthly</span>
-                    </div>
-                    <div class="flex flex-col items-center">
-                        <span class="text-3xl">🌎</span>
-                        <span class="text-4xl font-bold text-heading mt-2">150</span>
-                        <span class="text-sm font-semibold text-secondary">Total</span>
-                    </div>
-                </div>
-            </div>
         </section>
 
     </main>
@@ -572,13 +444,55 @@
             const mobileMenu = document.getElementById('mobile-menu');
             const navLinks = document.querySelectorAll('.nav-link');
             const sections = document.querySelectorAll('main section');
-            const header = document.getElementById('main-header'); // Get the header element
+            const header = document.getElementById('main-header'); 
+
+            // Theme toggle
+            const themeToggleBtn = document.getElementById('theme-toggle');
+            const currentTheme = localStorage.getItem('theme') || 'light-theme';
+            document.body.classList.add(currentTheme);
+            updateNavColors(currentTheme);
+
+            themeToggleBtn.addEventListener('click', () => {
+                let newTheme;
+                if (document.body.classList.contains('light-theme')) {
+                    document.body.classList.remove('light-theme');
+                    document.body.classList.add('dark-theme');
+                    newTheme = 'dark-theme';
+                } else {
+                    document.body.classList.remove('dark-theme');
+                    document.body.classList.add('light-theme');
+                    newTheme = 'light-theme';
+                }
+                localStorage.setItem('theme', newTheme);
+                updateNavColors(newTheme);
+            });
+            
+            function updateNavColors(theme) {
+                const isDark = theme === 'dark-theme';
+                const textColor = isDark ? 'var(--text-body-dark)' : 'var(--text-body-light)';
+                const hoverColor = isDark ? 'var(--accent-color-dark)' : 'var(--accent-color-light)';
+                const headerBg = isDark ? '#2C3E50' : '#FFFFFF';
+
+                header.style.backgroundColor = isDark ? '#2C3E50' : 'rgba(255, 255, 255, 0.8)';
+                document.body.style.setProperty('--bg-primary', isDark ? 'var(--bg-primary-dark)' : 'var(--bg-primary-light)');
+                document.body.style.setProperty('--bg-secondary', isDark ? 'var(--bg-secondary-dark)' : 'var(--bg-secondary-light)');
+                document.body.style.setProperty('--text-heading', isDark ? 'var(--text-heading-dark)' : 'var(--text-heading-light)');
+                document.body.style.setProperty('--text-body', isDark ? 'var(--text-body-dark)' : 'var(--text-body-light)');
+                document.body.style.setProperty('--text-secondary', isDark ? 'var(--text-secondary-dark)' : 'var(--text-secondary-light)');
+                document.body.style.setProperty('--accent-color', isDark ? 'var(--accent-color-dark)' : 'var(--accent-color-light)');
+
+                navLinks.forEach(link => {
+                    link.style.color = textColor;
+                });
+                themeToggleBtn.style.color = textColor;
+                mobileMenuButton.style.color = textColor;
+            }
+
 
             mobileMenuButton.addEventListener('click', () => {
                 mobileMenu.classList.toggle('hidden');
             });
 
-            // Smooth scroll for nav links with offset
             navLinks.forEach(link => {
                 link.addEventListener('click', function(e) {
                     const targetId = this.getAttribute('href');
@@ -586,7 +500,7 @@
                         e.preventDefault();
                         const targetElement = document.querySelector(targetId);
                         if (targetElement) {
-                            const headerOffset = header.offsetHeight; // Get dynamic header height
+                            const headerOffset = header.offsetHeight;
                             const elementPosition = targetElement.getBoundingClientRect().top + window.pageYOffset;
                             const offsetPosition = elementPosition - headerOffset;
 
@@ -595,7 +509,6 @@
                                 behavior: "smooth"
                             });
 
-                            // Close mobile menu after clicking a link
                             if (!mobileMenu.classList.contains('hidden')) {
                                 mobileMenu.classList.add('hidden');
                             }
@@ -604,13 +517,11 @@
                 });
             });
 
-
-            // Hero section animation
             const heroElements = document.querySelectorAll('.hero-title');
             heroElements.forEach((el, index) => {
                 setTimeout(() => {
                     el.classList.add('loaded');
-                }, 200 * index); // Stagger the animation
+                }, 200 * index);
             });
 
             const experienceData = [
@@ -694,7 +605,7 @@
                 }
             ];
             
-            const roadmapContainer = document.getElementById('roadmap-container');
+            const experienceGridContainer = document.getElementById('experience-grid-container');
             const modal = document.getElementById('experience-modal');
             const closeModalBtn = document.querySelector('.close-button');
             const modalCompany = document.getElementById('modal-company');
@@ -703,22 +614,16 @@
             const modalDescription = document.getElementById('modal-description');
             
             experienceData.forEach((exp, index) => {
-                const roadmapItem = document.createElement('div');
-                roadmapItem.className = 'roadmap-item';
-                roadmapItem.innerHTML = `
-                    <div class="roadmap-line"></div>
-                    <div class="roadmap-point"></div>
-                    <div class="roadmap-card">
-                        <div class="roadmap-period">${exp.start} - ${exp.end}</div>
-                        <div class="roadmap-role">${exp.role}</div>
-                        <div class="roadmap-company">${exp.company}</div>
-                    </div>
+                const experienceCard = document.createElement('div');
+                experienceCard.className = 'experience-card card section-animate';
+                experienceCard.innerHTML = `
+                    <div class="company-name text-lg font-semibold">${exp.company}</div>
+                    <div class="role-name">${exp.role}</div>
+                    <div class="period">${exp.start} - ${exp.end}</div>
                 `;
-                roadmapContainer.appendChild(roadmapItem);
+                experienceGridContainer.appendChild(experienceCard);
                 
-                const card = roadmapItem.querySelector('.roadmap-card');
-                
-                card.addEventListener('click', () => {
+                experienceCard.addEventListener('click', () => {
                     modalCompany.textContent = exp.company;
                     modalRole.textContent = exp.role;
                     modalPeriod.textContent = `${exp.start} - ${exp.end}`;
@@ -754,14 +659,14 @@
             const skillsContainer = document.getElementById('skills-container');
             skillsData.forEach(skill => {
                 const skillItem = document.createElement('div');
-                skillItem.className = 'skill-item section-animate'; 
+                skillItem.className = 'skill-item card section-animate'; 
                 skillItem.innerHTML = `
-                    <div class="flex justify-between items-center mb-1">
-                        <span class="text-lg font-medium text-body">${skill.name}</span>
-                        <span class="text-sm font-semibold text-secondary">${skill.proficiency}%</span>
+                    <div class="flex justify-between items-center">
+                        <span class="skill-name font-semibold text-heading">${skill.name}</span>
+                        <span class="skill-proficiency text-secondary">${skill.proficiency}%</span>
                     </div>
-                    <div class="skill-bar-container">
-                        <div class="skill-bar-fill" style="--skill-width: ${skill.proficiency}%;"></div>
+                    <div class="mt-2 w-full h-2 rounded-full bg-secondary overflow-hidden">
+                        <div class="skill-bar h-full rounded-full" style="width: 0; background-color: var(--accent-color); transition: width 1.5s ease-out; --skill-width: ${skill.proficiency}%;"></div>
                     </div>
                 `;
                 skillsContainer.appendChild(skillItem);
@@ -778,18 +683,20 @@
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
                         entry.target.classList.add('in-view');
+                        // Animate skill bars
                         if (entry.target.classList.contains('skill-item')) {
-                            const skillBarFill = entry.target.querySelector('.skill-bar-fill');
-                            if (skillBarFill) {
-                                skillBarFill.style.width = skillBarFill.style.getPropertyValue('--skill-width');
+                            const skillBar = entry.target.querySelector('.skill-bar');
+                            if (skillBar) {
+                                skillBar.style.width = skillBar.style.getPropertyValue('--skill-width');
                             }
                         }
                     } else {
                         entry.target.classList.remove('in-view'); 
+                        // Reset skill bars when out of view
                         if (entry.target.classList.contains('skill-item')) {
-                            const skillBarFill = entry.target.querySelector('.skill-bar-fill');
-                            if (skillBarFill) {
-                                skillBarFill.style.width = '0%';
+                            const skillBar = entry.target.querySelector('.skill-bar');
+                            if (skillBar) {
+                                skillBar.style.width = '0%';
                             }
                         }
                     }
@@ -800,9 +707,8 @@
                 observer.observe(section);
             });
             document.querySelectorAll('.skill-item').forEach(item => {
-                        observer.observe(item);
+                observer.observe(item);
             });
-
 
             // Active nav link highlighting
             const updateActiveNavLink = () => {
@@ -828,8 +734,8 @@
             updateActiveNavLink(); 
 
             // Education & Entrepreneurship Accordion Logic
-            const educationCard = document.querySelector('#education-card-container .education-card');
-            const entrepreneurshipCard = document.querySelector('#entrepreneurship-card-container .education-card');
+            const educationCard = document.querySelector('#education-card-container .flip-card');
+            const entrepreneurshipCard = document.querySelector('#entrepreneurship-card-container .flip-card');
 
             educationCard.addEventListener('click', () => {
                 educationCard.classList.toggle('is-flipped');
